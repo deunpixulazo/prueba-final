@@ -1,0 +1,103 @@
+﻿# prueba-final
+def guardar(lista_notebooks):
+    """Agrega uno o más notebooks a la lista."""
+    try:
+        cantidad = int(input("Ingrese la cantidad de notebooks a registrar: "))
+        for i in range(cantidad):
+            print(f"\n--- Ingresando Notebook #{i+1} ---")
+            id_notebook = input("Ingrese el modelo del notebook: ").strip().lower()
+            
+            while True: 
+                try:
+                    precio = int(input("Ingrese el precio: "))
+                    break
+                except ValueError:
+                    print("Error: El precio debe ser un valor numérico.")
+        
+            lista_notebooks.append({
+                "id": id_notebook,
+                "precio": precio
+            })
+        print("\n¡Notebook(s) guardado(s) exitosamente!")
+    except ValueError:
+        print("Error: Debe ingresar un número para la cantidad.")
+
+def eliminar(lista_notebooks):
+    """Elimina un notebook de la lista por su ID."""
+    if not lista_notebooks:
+        print("No hay notebooks para eliminar.")
+        return
+
+    id_a_eliminar = input("Ingrese el ID del notebook que desea eliminar: ").strip().lower()
+    
+    notebook_a_eliminar = None
+    for notebook in lista_notebooks:
+        if notebook["id"] == id_a_eliminar:
+            notebook_a_eliminar = notebook
+            break
+
+    if notebook_a_eliminar:
+        lista_notebooks.remove(notebook_a_eliminar)
+        print(f"Notebook con ID '{id_a_eliminar}' eliminado exitosamente.")
+    else:
+        print(f"No se encontró ningún notebook con el ID '{id_a_eliminar}'.")
+
+def buscar(lista_notebooks):
+    """Busca y muestra un notebook en la lista por su ID."""
+    if not lista_notebooks:
+        print("No hay notebooks para buscar.")
+        return
+
+    id_a_buscar = input("Ingrese el ID del notebook a buscar: ").strip().lower()
+    encontrado = False
+    for notebook in lista_notebooks:
+        if notebook["id"] == id_a_buscar:
+            if not encontrado: 
+                print("\n--- Notebook(s) Encontrado(s) ---")
+        
+            print(f"Modelo/ID: {notebook['id']} | Precio: ${notebook['precio']:_}")
+            encontrado = True
+    
+    if not encontrado:
+        print(f"No se encontró ningún notebook con el ID '{id_a_buscar}'.")
+
+def mostrar(lista_notebooks):
+    """Muestra todos los notebooks registrados."""
+    if not lista_notebooks:
+        print("\nNo hay notebooks registrados para mostrar.")
+    else:
+        print("\n--- Lista de Notebooks ---")
+        for i, notebook in enumerate(lista_notebooks):
+            print(f"{i+1}. ID: {notebook['id']} | Precio: ${notebook['precio']:_}")
+        print("--------------------------")
+
+def menu():
+    """Muestra el menú de opciones."""
+    print("\n----- PyBooks MENU -----")
+    print("1. Guardar Notebook")
+    print("2. Mostrar todos")
+    print("3. Eliminar Notebook")
+    print("4. Buscar Notebook")
+    print("5. Salir")
+
+def main():
+        
+        lista_notebook=[]
+        while True:
+            menu()
+            opcion = input("Seleccione una opción: ").strip()
+
+            if opcion == '1':
+                guardar(lista_notebook)
+            elif opcion == '2':
+                mostrar(lista_notebook)
+            elif opcion == '3':
+                eliminar(lista_notebook)
+            elif opcion == '4':
+                buscar(lista_notebook)
+            elif opcion == '5':
+                print("¡Gracias por usar PyBooks! Saliendo...")
+                break
+
+if __name__ == "__main__":
+    main()
